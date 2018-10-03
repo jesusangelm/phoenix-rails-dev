@@ -14,10 +14,17 @@
       <a class="main-nav__logo" href="/"></a>
 
       <ul class="main-nav__links">
+        <%= if @current_user do %>
+          <li><%= @current_user.full_name %></li>
+        <% else %>
+          <li><%= link "sign up", to: user_path(@conn, :new) %></li>
+          <li><%= link "sign in", to: session_path(@conn, :new) %></li>
+        <% end %>
+
         <%= if items_count(@conn) do %>
           <li>
             <%= link to: cart_path(@conn, :show) do %>
-            cart <span class="badge"><%= items_count(@conn) %></span>
+              cart <span class="badge"><%= items_count(@conn) %></span>
             <% end %>
           </li>
         <% end %>
@@ -39,3 +46,4 @@
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
+
